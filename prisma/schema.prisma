@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  user_no Int      @id @default(autoincrement())
+  user_id String   @unique
+  pwd     String
+  Diary   Diary[]
+  Shared  Shared[]
+}
+
+model Diary {
+  diary_no   Int      @id @default(autoincrement())
+  title_list String[]
+  user_no    Int
+  user       User     @relation(fields: [user_no], references: [user_no])
+  painting   String
+  text_field String
+  Shared     Shared[]
+}
+
+model Shared {
+  diary_no       Int     @unique
+  diary          Diary   @relation(fields: [diary_no], references: [diary_no])
+  shared_user_no Int
+  user           User    @relation(fields: [shared_user_no], references: [user_no])
+  shared_state   Boolean
+}
