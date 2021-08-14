@@ -29,6 +29,12 @@ let UserService = class UserService {
         });
         return createUser.user_no;
     }
+    async getUser(user_id) {
+        const user = await this.prisma.user.findFirst({
+            where: { user_id },
+        });
+        return user;
+    }
 };
 UserService = __decorate([
     common_1.Injectable(),

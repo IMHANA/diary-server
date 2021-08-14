@@ -7,4 +7,5 @@ export declare class UserService {
     private user;
     getUserList(): Promise<User[]>;
     addUser(user: Prisma.UserCreateInput): Promise<number>;
+    getUser(user_id: string): Promise<User>;
 }

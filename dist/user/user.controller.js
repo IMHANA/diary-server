@@ -26,6 +26,9 @@ let UserController = class UserController {
     addUser(body) {
         return this.userService.addUser(body);
     }
+    patch(userId) {
+        return this.userService.getUser(userId);
+    }
 };
 __decorate([
     common_1.Get('list'),
@@ -40,6 +43,13 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addUser", null);
+__decorate([
+    common_1.Get(':user_id'),
+    __param(0, common_1.Param('user_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "patch", null);
 UserController = __decorate([
     common_1.Controller('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

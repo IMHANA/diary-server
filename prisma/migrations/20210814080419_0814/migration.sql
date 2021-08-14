@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Diary" ADD COLUMN     "sticker" INTEGER NOT NULL DEFAULT 1;
