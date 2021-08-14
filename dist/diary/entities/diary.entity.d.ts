@@ -5,4 +5,5 @@ export declare class Diary {
     painting: string;
     text_field: string;
     sticker: number;
+    diary_date: Date;
 }

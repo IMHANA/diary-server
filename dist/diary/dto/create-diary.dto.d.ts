@@ -5,4 +5,5 @@ export declare class CreateDiaryDto {
     painting: string;
     text_field: string;
     sticker: number;
+    diary_date: Date;
 }
