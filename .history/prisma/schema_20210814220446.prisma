@@ -26,7 +26,7 @@ model Diary {
   painting   String
   text_field String
   sticker    Int      @default(1)
-  diary_date DateTime @default(now()) @db.Timestamptz
+  diary_date DateTime @default(now())
   Shared     Shared[]
 }
 
