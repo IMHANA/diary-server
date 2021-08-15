@@ -30,9 +30,6 @@ let DiaryController = class DiaryController {
     updateDiary(diary_no, updateData) {
         return this.diaryService.updateDiary(diary_no, updateData);
     }
-    deleteDiary(diary_no) {
-        return this.diaryService.deleteDiary(diary_no);
-    }
 };
 __decorate([
     common_1.Get('list'),
@@ -55,13 +52,6 @@ __decorate([
     __metadata("design:paramtypes", [Number, update_diary_dto_1.UpdateDiaryDto]),
     __metadata("design:returntype", void 0)
 ], DiaryController.prototype, "updateDiary", null);
-__decorate([
-    common_1.Delete(':diary_no'),
-    __param(0, common_1.Param('diary_no')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], DiaryController.prototype, "deleteDiary", null);
 DiaryController = __decorate([
     common_1.Controller('diary'),
     __metadata("design:paramtypes", [diary_service_1.DiaryService])

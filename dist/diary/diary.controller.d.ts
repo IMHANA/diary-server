@@ -7,4 +7,5 @@ export declare class DiaryController {
     getList(): Promise<Diary[]>;
     addDiary(body: Prisma.DiaryCreateInput): Promise<number>;
     updateDiary(diary_no: number, updateData: UpdateDiaryDto): Promise<Diary>;
+    deleteDiary(diary_no: number): Promise<Diary>;
 }

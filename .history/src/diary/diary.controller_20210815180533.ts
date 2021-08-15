@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Diary, Prisma } from '@prisma/client';
 import { DiaryService } from './diary.service';
 import { CreateDiaryDto } from './dto/create-diary.dto';
@@ -37,9 +29,9 @@ export class DiaryController {
     return this.diaryService.updateDiary(diary_no, updateData);
   }
 
-  //일기 삭제
   @Delete(':diary_no')
-  deleteDiary(@Param('diary_no') diary_no: number): Promise<Diary> {
-    return this.diaryService.deleteDiary(diary_no);
+  deleteDiary(@Param('diary_no') diary_no: number)  {
+      return this.diaryService.deleteDiary(diary_no);
+    }
   }
 }

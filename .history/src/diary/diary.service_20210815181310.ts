@@ -1,5 +1,5 @@
 import { Diary, Prisma } from '.prisma/client';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 // import { Diary } from './entities/diary.entity';
 
@@ -34,12 +34,14 @@ export class DiaryService {
     return diary;
   }
 
-  async deleteDiary(diary_no: number): Promise<Diary> {
-    diary_no = +diary_no;
-    const diary = await this.prisma.diary.delete({ where: { diary_no } });
-    if (!diary) {
-      throw new NotFoundException(`diary with diary.no ${diary_no} not found.`);
-    }
-    return diary;
+    async deleteDiary(diary_no: number): Promise<Diary> {
+        diary_no = +diary_no;
+        const diary = await this.prisma.diary.findFirst(
+          { where: { diary_no }};
+        )
+        if (!diary) {
+          throw new NptFoundException(`diary with diary.no ${ diary_no } not found.`);
+        }
+        return diary;
   }
 }

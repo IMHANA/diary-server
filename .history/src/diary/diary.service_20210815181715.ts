@@ -36,7 +36,7 @@ export class DiaryService {
 
   async deleteDiary(diary_no: number): Promise<Diary> {
     diary_no = +diary_no;
-    const diary = await this.prisma.diary.delete({ where: { diary_no } });
+    const diary = await this.prisma.diary.findFirst({ where: { diary_no } });
     if (!diary) {
       throw new NotFoundException(`diary with diary.no ${diary_no} not found.`);
     }

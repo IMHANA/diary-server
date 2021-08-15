@@ -37,6 +37,14 @@ let DiaryService = class DiaryService {
         });
         return diary;
     }
+    async deleteDiary(diary_no) {
+        diary_no = +diary_no;
+        const diary = await this.prisma.diary.delete({ where: { diary_no } });
+        if (!diary) {
+            throw new common_1.NotFoundException(`diary with diary.no ${diary_no} not found.`);
+        }
+        return diary;
+    }
 };
 DiaryService = __decorate([
     common_1.Injectable(),
