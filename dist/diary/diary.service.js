@@ -23,6 +23,9 @@ let DiaryService = class DiaryService {
         });
         return diaries;
     }
+    async getHash(hash) {
+        return this.diary;
+    }
     async addDiary(diary) {
         const createDiary = await this.prisma.diary.create({
             data: diary,

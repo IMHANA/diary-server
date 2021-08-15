@@ -13,15 +13,20 @@ export class UserController {
     return this.userService.getUserList();
   }
 
-  //사용자 id로 조회
   @Get(':user_id')
-  getUser(@Param('user_id') userId: string): Promise<User> {
-    return this.userService.getUser(userId);
+  getUser(): Promise<User> {
+    return this.userService.getUser();
   }
 
   //사용자 추가
   @Post('add')
-  addUser(@Body() body: CreateUserDto): Promise<User> {
+  addUser(@Body() body: CreateUserDto): Promise<number> {
     return this.userService.addUser(body);
+  }
+
+  //사용자 id로 추가
+  @Get(':user_id')
+  patch(@Param('user_id') userId: string): Promise<User> {
+    return this.userService.getUser(userId);
   }
 }

@@ -10,7 +10,6 @@ export class UserService {
   constructor(private readonly prisma: PrismaService) {}
   private user: User[] = [];
 
-  //사용자 전체조회
   async getUserList(): Promise<User[]> {
     const users = await this.prisma.user.findMany({
       orderBy: { user_id: 'desc' },
@@ -18,7 +17,6 @@ export class UserService {
     return users;
   }
 
-  //사용자 id로 조회
   async getUser(user_id: string): Promise<User> {
     const user = await this.prisma.user.findFirst({
       where: { user_id },
@@ -26,11 +24,10 @@ export class UserService {
     return user;
   }
 
-  //사용자 추가
   async addUser(user: Prisma.UserCreateInput): Promise<User> {
     const newUser = user;
-    let id = '';
-    id = newUser.user_id;
+    const id = '';
+    newUser.user_id = id;
     const validate_err = await validate(newUser);
     if (validate_err.length > 0) {
       const err = { id: 'User id is duplicated' };
@@ -40,8 +37,12 @@ export class UserService {
       );
     } else {
       return await this.prisma.user.create({
-        data: newUser,
+        data: user,
       });
     }
+    //   const createUser = await this.prisma.user.create({
+    //     data: user,
+    //   });
+    //   return createUser.user_no;
   }
 }

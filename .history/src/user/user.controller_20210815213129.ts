@@ -21,7 +21,7 @@ export class UserController {
 
   //사용자 추가
   @Post('add')
-  addUser(@Body() body: CreateUserDto): Promise<User> {
+  addUser(@Body() body: CreateUserDto): Promise<number> {
     return this.userService.addUser(body);
   }
 }

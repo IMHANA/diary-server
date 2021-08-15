@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const class_validator_1 = require("class-validator");
 const prisma_service_1 = require("../prisma/prisma.service");
 let UserService = class UserService {
     constructor(prisma) {
@@ -23,17 +24,26 @@ let UserService = class UserService {
         });
         return users;
     }
-    async addUser(user) {
-        const createUser = await this.prisma.user.create({
-            data: user,
-        });
-        return createUser.user_no;
-    }
     async getUser(user_id) {
         const user = await this.prisma.user.findFirst({
             where: { user_id },
         });
         return user;
+    }
+    async addUser(user) {
+        const newUser = user;
+        let id = '';
+        id = newUser.user_id;
+        const validate_err = await class_validator_1.validate(newUser);
+        if (validate_err.length > 0) {
+            const err = { id: 'User id is duplicated' };
+            throw new common_1.HttpException({ message: 'Input data validation failed', err }, common_1.HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return await this.prisma.user.create({
+                data: newUser,
+            });
+        }
     }
 };
 UserService = __decorate([
