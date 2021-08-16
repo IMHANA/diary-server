@@ -25,7 +25,6 @@ export class DiaryController {
     return this.diaryService.getList();
   }
 
-  //일기 해시태그로 조회
   @Get('search_hash')
   getHash(@Body() searchParam: SearchHasDto): Promise<Diary[]> {
     return this.diaryService.getHash(searchParam.hash);
@@ -35,12 +34,6 @@ export class DiaryController {
   @Post('new_diary')
   addDiary(@Body() body: Prisma.DiaryCreateInput): Promise<number> {
     return this.diaryService.addDiary(body);
-  }
-
-  //일기 diary no로 조회
-  @Get(':diary_no')
-  getDiaryWithNo(@Param('diary_no') diary_no: number) {
-    return this.diaryService.getDiaryWithNo(diary_no);
   }
 
   //일기 수정

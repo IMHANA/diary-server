@@ -36,7 +36,6 @@ export class DiaryService {
     return createDiary.diary_no;
   }
 
-  //일기 diary no로 조회
   async getDiaryWithNo(diary_no: number): Promise<Diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.findFirst({

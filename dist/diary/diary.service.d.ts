@@ -7,6 +7,7 @@ export declare class DiaryService {
     getList(): Promise<Diary[]>;
     getHash(hash: string): Promise<Diary[]>;
     addDiary(diary: Prisma.DiaryCreateInput): Promise<number>;
+    getDiaryWithNo(diary_no: number): Promise<Diary>;
     updateDiary(diary_no: number, updateData: Prisma.DiaryUpdateInput): Promise<Diary>;
     deleteDiary(diary_no: number): Promise<Diary>;
 }

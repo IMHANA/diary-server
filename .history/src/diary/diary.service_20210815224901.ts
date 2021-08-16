@@ -8,7 +8,6 @@ export class DiaryService {
   constructor(private readonly prisma: PrismaService) {}
   private diary: Diary[] = [];
 
-  //일기 전체 조회
   async getList(): Promise<Diary[]> {
     const diaries = await this.prisma.diary.findMany({
       orderBy: { diary_date: 'desc' },
@@ -16,19 +15,17 @@ export class DiaryService {
     return diaries;
   }
 
-  //일기 해시태그로 조회
   async getHash(hash: string): Promise<Diary[]> {
     const diaries = await this.prisma.diary.findMany({
       where: {
         title_list: {
-          has: hash,
+          contains: hash,
         },
       },
     });
-    return diaries;
+    return this.diary;
   }
 
-  //일기 추가
   async addDiary(diary: Prisma.DiaryCreateInput): Promise<number> {
     const createDiary = await this.prisma.diary.create({
       data: diary,
@@ -36,16 +33,6 @@ export class DiaryService {
     return createDiary.diary_no;
   }
 
-  //일기 diary no로 조회
-  async getDiaryWithNo(diary_no: number): Promise<Diary> {
-    diary_no = +diary_no;
-    const diary = await this.prisma.diary.findFirst({
-      where: { diary_no },
-    });
-    return diary;
-  }
-
-  //일기 수정
   async updateDiary(
     diary_no: number,
     updateData: Prisma.DiaryUpdateInput,
@@ -58,7 +45,6 @@ export class DiaryService {
     return diary;
   }
 
-  //일기 삭제
   async deleteDiary(diary_no: number): Promise<Diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.delete({ where: { diary_no } });

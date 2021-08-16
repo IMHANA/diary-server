@@ -37,7 +37,7 @@ export class DiaryController {
     return this.diaryService.addDiary(body);
   }
 
-  //일기 diary no로 조회
+  //알가 diary no로 조회
   @Get(':diary_no')
   getDiaryWithNo(@Param('diary_no') diary_no: number) {
     return this.diaryService.getDiaryWithNo(diary_no);

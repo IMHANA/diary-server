@@ -24,8 +24,14 @@ let DiaryController = class DiaryController {
     getList() {
         return this.diaryService.getList();
     }
+    getHash(searchParam) {
+        return this.diaryService.getHash(searchParam.hash);
+    }
     addDiary(body) {
         return this.diaryService.addDiary(body);
+    }
+    getDiaryWithNo(diary_no) {
+        return this.diaryService.getDiaryWithNo(diary_no);
     }
     updateDiary(diary_no, updateData) {
         return this.diaryService.updateDiary(diary_no, updateData);
@@ -41,12 +47,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DiaryController.prototype, "getList", null);
 __decorate([
+    common_1.Get('search_hash'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], DiaryController.prototype, "getHash", null);
+__decorate([
     common_1.Post('new_diary'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DiaryController.prototype, "addDiary", null);
+__decorate([
+    common_1.Get(':diary_no'),
+    __param(0, common_1.Param('diary_no')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], DiaryController.prototype, "getDiaryWithNo", null);
 __decorate([
     common_1.Patch(':diary_no'),
     __param(0, common_1.Param('diary_no')),

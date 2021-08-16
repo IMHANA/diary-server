@@ -12,9 +12,6 @@ import { DiaryService } from './diary.service';
 import { CreateDiaryDto } from './dto/create-diary.dto';
 import { UpdateDiaryDto } from './dto/update-diary.dto';
 
-interface SearchHasDto {
-  hash: string;
-}
 @Controller('diary')
 export class DiaryController {
   constructor(private readonly diaryService: DiaryService) {}
@@ -25,22 +22,15 @@ export class DiaryController {
     return this.diaryService.getList();
   }
 
-  //일기 해시태그로 조회
-  @Get('search_hash')
-  getHash(@Body() searchParam: SearchHasDto): Promise<Diary[]> {
-    return this.diaryService.getHash(searchParam.hash);
+  @Get('secrch_hash')
+  getHash(@Body() hash: string): Promise<Diary[]> {
+    return this.diaryService.getHash(hash);
   }
 
   //일기 추가
   @Post('new_diary')
   addDiary(@Body() body: Prisma.DiaryCreateInput): Promise<number> {
     return this.diaryService.addDiary(body);
-  }
-
-  //일기 diary no로 조회
-  @Get(':diary_no')
-  getDiaryWithNo(@Param('diary_no') diary_no: number) {
-    return this.diaryService.getDiaryWithNo(diary_no);
   }
 
   //일기 수정

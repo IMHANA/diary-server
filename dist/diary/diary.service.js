@@ -24,13 +24,27 @@ let DiaryService = class DiaryService {
         return diaries;
     }
     async getHash(hash) {
-        return this.diary;
+        const diaries = await this.prisma.diary.findMany({
+            where: {
+                title_list: {
+                    has: hash,
+                },
+            },
+        });
+        return diaries;
     }
     async addDiary(diary) {
         const createDiary = await this.prisma.diary.create({
             data: diary,
         });
         return createDiary.diary_no;
+    }
+    async getDiaryWithNo(diary_no) {
+        diary_no = +diary_no;
+        const diary = await this.prisma.diary.findFirst({
+            where: { diary_no },
+        });
+        return diary;
     }
     async updateDiary(diary_no, updateData) {
         diary_no = +diary_no;

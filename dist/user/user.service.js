@@ -36,7 +36,7 @@ let UserService = class UserService {
         id = newUser.user_id;
         const validate_err = await class_validator_1.validate(newUser);
         if (validate_err.length > 0) {
-            const err = { id: 'User id is duplicated' };
+            const err = { id: 'User id is already exist' };
             throw new common_1.HttpException({ message: 'Input data validation failed', err }, common_1.HttpStatus.BAD_REQUEST);
         }
         else {
