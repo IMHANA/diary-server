@@ -43,12 +43,6 @@ export class DiaryService {
   // }
 
   //일기 년도별 조회
-  async getDiaryWithYear(year: number): Promise<Diary[]> {
-    const data = await this.prisma.$queryRaw(
-      `SELECT * FROM diary WHERE to_char(diary_date, 'YYYY') = ${year};`,
-    );
-    return data;
-  }
 
   //일기 월별 조회
 

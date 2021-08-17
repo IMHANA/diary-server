@@ -29,24 +29,15 @@ export class DiaryService {
   }
 
   //일기 년도별 조회
-  // async getDiaryWithYear(year: number): Promise<Diary[]> {
-  //   //년도를 어째 떼올지 고민해야할 부분
-  //   const data = await this.prisma.diary.findMany({
-  //     where: {
-  //       diary_date: {
-  //         gte: new Date('2021-01-01'),
-  //         lt: new Date('2021-07-31'),
-  //       },
-  //     },
-  //   });
-  //   return data;
-  // }
-
-  //일기 년도별 조회
   async getDiaryWithYear(year: number): Promise<Diary[]> {
-    const data = await this.prisma.$queryRaw(
-      `SELECT * FROM diary WHERE to_char(diary_date, 'YYYY') = ${year};`,
-    );
+    const data = await this.prisma.diary.findMany({
+      where: {
+        diary_date: {
+          gte: new Date('2021-01-01'),
+          lt: new Date('2021-12-31'),
+        },
+      },
+    });
     return data;
   }
 

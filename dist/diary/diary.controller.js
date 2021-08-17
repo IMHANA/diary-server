@@ -27,6 +27,9 @@ let DiaryController = class DiaryController {
     getHash(searchParam) {
         return this.diaryService.getHash(searchParam.hash);
     }
+    getDiaryWithYear(year) {
+        return this.diaryService.getDiaryWithYear(year);
+    }
     addDiary(body) {
         return this.diaryService.addDiary(body);
     }
@@ -53,6 +56,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DiaryController.prototype, "getHash", null);
+__decorate([
+    common_1.Get('diary_year/:year'),
+    __param(0, common_1.Param('year')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], DiaryController.prototype, "getDiaryWithYear", null);
 __decorate([
     common_1.Post('new_diary'),
     __param(0, common_1.Body()),

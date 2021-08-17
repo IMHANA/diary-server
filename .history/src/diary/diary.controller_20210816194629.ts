@@ -32,16 +32,12 @@ export class DiaryController {
   }
 
   //일기 select로 날짜만 다 가져오기?
-  // @Get('diary_year/:year')
-  // getDiaryWithYear(@Param('year') year: number): Promise<Diary[]> {
-  //   return this.diaryService.getDiaryWithYear(year);
-  // }
-
-  //일기 년도별 조회
   @Get('diary_year/:year')
-  getDiaryWithYear(@Param('year') year: number): Promise<Diary[]> {
+  getDiaryWithYear(@Param('year') yaer: number) {
     return this.diaryService.getDiaryWithYear(year);
   }
+
+  //일기 년도별 조회
 
   //일기 월별 조회
 

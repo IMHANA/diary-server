@@ -9,6 +9,7 @@ export declare class DiaryController {
     constructor(diaryService: DiaryService);
     getList(): Promise<Diary[]>;
     getHash(searchParam: SearchHasDto): Promise<Diary[]>;
+    getDiaryWithYear(year: number): Promise<Diary[]>;
     addDiary(body: Prisma.DiaryCreateInput): Promise<number>;
     getDiaryWithNo(diary_no: number): Promise<Diary>;
     updateDiary(diary_no: number, updateData: UpdateDiaryDto): Promise<Diary>;
