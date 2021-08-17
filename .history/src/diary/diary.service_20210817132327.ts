@@ -44,9 +44,8 @@ export class DiaryService {
 
   //일기 년도별 조회
   async getDiaryWithYear(year: number): Promise<diary[]> {
-    console.log(year);
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYY') = '${year}';`,
+      `SELECT * FROM diary WHERE to_char(diary_date, 'YYYY') = ${year};`,
     );
     return data;
   }
@@ -56,7 +55,7 @@ export class DiaryService {
   //일기 일별 조회
 
   //일기 추가
-  async addDiary(diary: Prisma.diaryCreateInput): Promise<number> {
+  async addDiary(diary: Prisma.DiaryCreateInput): Promise<number> {
     const createDiary = await this.prisma.diary.create({
       data: diary,
     });
@@ -75,7 +74,7 @@ export class DiaryService {
   //일기 수정
   async updateDiary(
     diary_no: number,
-    updateData: Prisma.diaryUpdateInput,
+    updateData: Prisma.DiaryUpdateInput,
   ): Promise<diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.update({

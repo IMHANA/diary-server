@@ -1,4 +1,4 @@
-import { diary, Prisma } from '.prisma/client';
+import { Diary, Prisma } from '.prisma/client';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 // import { Diary } from './entities/diary.entity';
@@ -6,10 +6,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class DiaryService {
   constructor(private readonly prisma: PrismaService) {}
-  private diary: diary[] = [];
+  private diary: Diary[] = [];
 
   //일기 전체 조회
-  async getList(): Promise<diary[]> {
+  async getList(): Promise<Diary[]> {
     const diaries = await this.prisma.diary.findMany({
       orderBy: { diary_date: 'desc' },
     });
@@ -17,7 +17,7 @@ export class DiaryService {
   }
 
   //일기 해시태그로 조회
-  async getHash(hash: string): Promise<diary[]> {
+  async getHash(hash: string): Promise<Diary[]> {
     const diaries = await this.prisma.diary.findMany({
       where: {
         title_list: {
@@ -43,10 +43,9 @@ export class DiaryService {
   // }
 
   //일기 년도별 조회
-  async getDiaryWithYear(year: number): Promise<diary[]> {
-    console.log(year);
+  async getDiaryWithYear(year: number): Promise<Diary[]> {
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYY') = '${year}';`,
+      `SELECT * FROM diary WHERE to_char(diary_date, 'YYYY') = ${year};`,
     );
     return data;
   }
@@ -56,7 +55,7 @@ export class DiaryService {
   //일기 일별 조회
 
   //일기 추가
-  async addDiary(diary: Prisma.diaryCreateInput): Promise<number> {
+  async addDiary(diary: Prisma.DiaryCreateInput): Promise<number> {
     const createDiary = await this.prisma.diary.create({
       data: diary,
     });
@@ -64,7 +63,7 @@ export class DiaryService {
   }
 
   //일기 diary no로 조회
-  async getDiaryWithNo(diary_no: number): Promise<diary> {
+  async getDiaryWithNo(diary_no: number): Promise<Diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.findFirst({
       where: { diary_no },
@@ -75,8 +74,8 @@ export class DiaryService {
   //일기 수정
   async updateDiary(
     diary_no: number,
-    updateData: Prisma.diaryUpdateInput,
-  ): Promise<diary> {
+    updateData: Prisma.DiaryUpdateInput,
+  ): Promise<Diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.update({
       where: { diary_no },
@@ -86,7 +85,7 @@ export class DiaryService {
   }
 
   //일기 삭제
-  async deleteDiary(diary_no: number): Promise<diary> {
+  async deleteDiary(diary_no: number): Promise<Diary> {
     diary_no = +diary_no;
     const diary = await this.prisma.diary.delete({ where: { diary_no } });
     if (!diary) {

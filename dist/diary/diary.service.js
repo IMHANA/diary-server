@@ -34,7 +34,8 @@ let DiaryService = class DiaryService {
         return diaries;
     }
     async getDiaryWithYear(year) {
-        const data = await this.prisma.$queryRaw(`SELECT * FROM diary WHERE to_char(diary_date, 'YYYY') = ${year};`);
+        console.log(year);
+        const data = await this.prisma.$queryRaw(`select * from diary where to_char(diary_date, 'YYYY') = '${year}';`);
         return data;
     }
     async addDiary(diary) {

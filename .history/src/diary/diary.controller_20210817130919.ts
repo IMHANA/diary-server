@@ -7,9 +7,9 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { diary, Prisma } from '@prisma/client';
+import { Diary, Prisma } from '@prisma/client';
 import { DiaryService } from './diary.service';
-import { CreateDiaryDto } from './dto/create-diary.dto';
+import { CreatediaryDto } from './dto/create-diary.dto';
 import { UpdateDiaryDto } from './dto/update-diary.dto';
 
 interface SearchHasDto {
@@ -21,13 +21,13 @@ export class DiaryController {
 
   //일기 전체 조회
   @Get('list')
-  getList(): Promise<diary[]> {
+  getList(): Promise<Diary[]> {
     return this.diaryService.getList();
   }
 
   //일기 해시태그로 조회
   @Get('search_hash')
-  getHash(@Body() searchParam: SearchHasDto): Promise<diary[]> {
+  getHash(@Body() searchParam: SearchHasDto): Promise<Diary[]> {
     return this.diaryService.getHash(searchParam.hash);
   }
 
@@ -39,7 +39,7 @@ export class DiaryController {
 
   //일기 년도별 조회
   @Get('diary_year/:year')
-  getDiaryWithYear(@Param('year') year: number): Promise<diary[]> {
+  getDiaryWithYear(@Param('year') year: number): Promise<Diary[]> {
     return this.diaryService.getDiaryWithYear(year);
   }
 
@@ -70,7 +70,7 @@ export class DiaryController {
 
   //일기 삭제
   @Delete(':diary_no')
-  deleteDiary(@Param('diary_no') diary_no: number): Promise<diary> {
+  deleteDiary(@Param('diary_no') diary_no: number): Promise<Diary> {
     return this.diaryService.deleteDiary(diary_no);
   }
 }

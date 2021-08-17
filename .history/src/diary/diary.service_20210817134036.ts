@@ -46,7 +46,7 @@ export class DiaryService {
   async getDiaryWithYear(year: number): Promise<diary[]> {
     console.log(year);
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYY') = '${year}';`,
+      `select * from diary where to_char(diary_date, 'YYYY') = '2021';`,
     );
     return data;
   }
