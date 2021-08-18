@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiaryController = void 0;
 const common_1 = require("@nestjs/common");
@@ -56,49 +57,49 @@ __decorate([
     common_1.Get('list'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
 ], DiaryController.prototype, "getList", null);
 __decorate([
     common_1.Get('search_hash'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
 ], DiaryController.prototype, "getHash", null);
 __decorate([
     common_1.Get('diary_year/:year'),
     __param(0, common_1.Param('year')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
 ], DiaryController.prototype, "getDiaryWithYear", null);
 __decorate([
     common_1.Get('diary_month/:month'),
     __param(0, common_1.Param('month')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
 ], DiaryController.prototype, "getDiaryWithMonth", null);
 __decorate([
     common_1.Get('diary_date/:day'),
     __param(0, common_1.Param('day')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
 ], DiaryController.prototype, "getDiaryWithDate", null);
 __decorate([
     common_1.Post('new_diary'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [typeof (_f = typeof client_1.Prisma !== "undefined" && client_1.Prisma.diaryCreateInput) === "function" ? _f : Object]),
+    __metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], DiaryController.prototype, "addDiary", null);
 __decorate([
     common_1.Get('montly_sticker/:year'),
     __param(0, common_1.Param('year')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_h = typeof Promise !== "undefined" && Promise) === "function" ? _h : Object)
 ], DiaryController.prototype, "getMonthlySticker", null);
 __decorate([
     common_1.Get(':diary_no'),
@@ -120,7 +121,7 @@ __decorate([
     __param(0, common_1.Param('diary_no')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
 ], DiaryController.prototype, "deleteDiary", null);
 DiaryController = __decorate([
     common_1.Controller('diary'),
