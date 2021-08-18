@@ -4,6 +4,4 @@ import { SharedService } from './shared.service';
 @Controller('shared')
 export class SharedController {
   constructor(private readonly sharedService: SharedService) {}
-
-  //공유할 일기
 }
