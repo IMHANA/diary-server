@@ -26,7 +26,7 @@ let UserService = class UserService {
     }
     async getUser(user_id) {
         const user = await this.prisma.user.findFirst({
-            where: { user_id },
+            where: { user_id: 'desc' },
         });
         return user;
     }

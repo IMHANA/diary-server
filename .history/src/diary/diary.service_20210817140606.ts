@@ -51,18 +51,18 @@ export class DiaryService {
     return data;
   }
 
-  //일기 월별 조회 (202108 형태)
-  async getDiaryWithMonth(month: string): Promise<diary[]> {
+  //일기 월별 조회
+  async getDiaryWithMonth(month: number): Promise<diary[]> {
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYYMM') = '${month}';`,
+      `select * from diary where to_char(diary_date, 'MM') = '${month}';`,
     );
     return data;
   }
 
-  //일기 일별 조회 (20210817 형태)
-  async getDiaryWithDay(day: string): Promise<diary[]> {
+  //일기 일별 조회
+  async getDiaryWithDate(date: number): Promise<diary[]> {
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYYMMDD') = '${day}'`,
+      `select * from diary where to_char(diary_date, 'MM') = '${date}';`,
     );
     return data;
   }
@@ -73,22 +73,6 @@ export class DiaryService {
       data: diary,
     });
     return createDiary.diary_no;
-  }
-
-  //월별 가장 많이 선택된 스티커 번호 조회
-  async getMonthlySticker(year: number): Promise<any> {
-    const diary = await this.prisma.$queryRaw(
-      `select ds, sticker
-      from(
-       select row_number () over (partition by ds ORDER BY cnt DESC) as rnk, ds, sticker
-       from(
-        select to_char(diary_date,'YYYY/MM') as ds, sticker, count(sticker) as cnt
-        from diary group by to_char(diary_date,'YYYY/MM'), sticker
-       ) as TBL1
-      ) as TBL2
-      where rnk = 1 and to_char(to_date(ds, 'YYYY/MM'),'YYYY') = '${year}'`,
-    );
-    return diary;
   }
 
   //일기 diary no로 조회

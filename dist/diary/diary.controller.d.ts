@@ -10,7 +10,10 @@ export declare class DiaryController {
     getList(): Promise<diary[]>;
     getHash(searchParam: SearchHasDto): Promise<diary[]>;
     getDiaryWithYear(year: number): Promise<diary[]>;
+    getDiaryWithMonth(month: string): Promise<diary[]>;
+    getDiaryWithDate(day: string): Promise<diary[]>;
     addDiary(body: Prisma.diaryCreateInput): Promise<number>;
+    getMonthlySticker(year: number): Promise<number>;
     getDiaryWithNo(diary_no: number): Promise<diary>;
     updateDiary(diary_no: number, updateData: UpdateDiaryDto): Promise<diary>;
     deleteDiary(diary_no: number): Promise<diary>;

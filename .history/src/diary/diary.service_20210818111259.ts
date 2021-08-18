@@ -88,7 +88,6 @@ export class DiaryService {
       ) as TBL2
       where rnk = 1 and to_char(to_date(ds, 'YYYY/MM'),'YYYY') = '${year}'`,
     );
-    return diary;
   }
 
   //일기 diary no로 조회

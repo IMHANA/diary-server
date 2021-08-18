@@ -30,8 +30,17 @@ let DiaryController = class DiaryController {
     getDiaryWithYear(year) {
         return this.diaryService.getDiaryWithYear(year);
     }
+    getDiaryWithMonth(month) {
+        return this.diaryService.getDiaryWithMonth(month);
+    }
+    getDiaryWithDate(day) {
+        return this.diaryService.getDiaryWithDay(day);
+    }
     addDiary(body) {
         return this.diaryService.addDiary(body);
+    }
+    getMonthlySticker(year) {
+        return this.diaryService.getMonthlySticker(year);
     }
     getDiaryWithNo(diary_no) {
         return this.diaryService.getDiaryWithNo(diary_no);
@@ -64,12 +73,33 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DiaryController.prototype, "getDiaryWithYear", null);
 __decorate([
+    common_1.Get('diary_month/:month'),
+    __param(0, common_1.Param('month')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], DiaryController.prototype, "getDiaryWithMonth", null);
+__decorate([
+    common_1.Get('diary_date/:day'),
+    __param(0, common_1.Param('day')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], DiaryController.prototype, "getDiaryWithDate", null);
+__decorate([
     common_1.Post('new_diary'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DiaryController.prototype, "addDiary", null);
+__decorate([
+    common_1.Get('montly_sticker/:year'),
+    __param(0, common_1.Param('year')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], DiaryController.prototype, "getMonthlySticker", null);
 __decorate([
     common_1.Get(':diary_no'),
     __param(0, common_1.Param('diary_no')),

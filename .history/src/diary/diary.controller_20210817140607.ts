@@ -43,28 +43,22 @@ export class DiaryController {
     return this.diaryService.getDiaryWithYear(year);
   }
 
-  //일기 월별 조회 (202108 형태)
+  //일기 월별 조회
   @Get('diary_month/:month')
-  getDiaryWithMonth(@Param('month') month: string): Promise<diary[]> {
+  getDiaryWithMonth(@Param('month') month: number): Promise<diary[]> {
     return this.diaryService.getDiaryWithMonth(month);
   }
 
-  //일기 일별 조회 (20210817 형태)
-  @Get('diary_date/:day')
-  getDiaryWithDate(@Param('day') day: string): Promise<diary[]> {
-    return this.diaryService.getDiaryWithDay(day);
+  //일기 일별 조회
+  @Get('diary_date/:date')
+  getDiaryWithDate(@Param('date') date: number): Promise<diary[]> {
+    return this.diaryService.getDiaryWithMonth(date);
   }
 
   //일기 추가
   @Post('new_diary')
   addDiary(@Body() body: Prisma.diaryCreateInput): Promise<number> {
     return this.diaryService.addDiary(body);
-  }
-
-  //월별 가장 많이 선택된 스티커 번호 조회
-  @Get('montly_sticker/:year')
-  getMonthlySticker(@Param('year') year: number): Promise<number> {
-    return this.diaryService.getMonthlySticker(year);
   }
 
   //일기 diary no로 조회

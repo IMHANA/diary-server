@@ -38,11 +38,31 @@ let DiaryService = class DiaryService {
         const data = await this.prisma.$queryRaw(`select * from diary where to_char(diary_date, 'YYYY') = '${year}';`);
         return data;
     }
+    async getDiaryWithMonth(month) {
+        const data = await this.prisma.$queryRaw(`select * from diary where to_char(diary_date, 'YYYYMM') = '${month}';`);
+        return data;
+    }
+    async getDiaryWithDay(day) {
+        const data = await this.prisma.$queryRaw(`select * from diary where to_char(diary_date, 'YYYYMMDD') = '${day}'`);
+        return data;
+    }
     async addDiary(diary) {
         const createDiary = await this.prisma.diary.create({
             data: diary,
         });
         return createDiary.diary_no;
+    }
+    async getMonthlySticker(year) {
+        const diary = await this.prisma.$queryRaw(`select ds, sticker
+      from(
+       select row_number () over (partition by ds ORDER BY cnt DESC) as rnk, ds, sticker
+       from(
+        select to_char(diary_date,'YYYY/MM') as ds, sticker, count(sticker) as cnt
+        from diary group by to_char(diary_date,'YYYY/MM'), sticker
+       ) as TBL1
+      ) as TBL2
+      where rnk = 1 and to_char(to_date(ds, 'YYYY/MM'),'YYYY') = '${year}'`);
+        return diary;
     }
     async getDiaryWithNo(diary_no) {
         diary_no = +diary_no;

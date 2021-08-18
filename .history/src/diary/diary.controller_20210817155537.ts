@@ -61,12 +61,6 @@ export class DiaryController {
     return this.diaryService.addDiary(body);
   }
 
-  //월별 가장 많이 선택된 스티커 번호 조회
-  @Get('montly_sticker/:year')
-  getMonthlySticker(@Param('year') year: number): Promise<number> {
-    return this.diaryService.getMonthlySticker(year);
-  }
-
   //일기 diary no로 조회
   @Get(':diary_no')
   getDiaryWithNo(@Param('diary_no') diary_no: number) {
