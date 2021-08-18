@@ -1,4 +1,4 @@
-export class Diary {
+export class diary {
   diary_no: number;
   title_list: string[];
   user_no: number;
