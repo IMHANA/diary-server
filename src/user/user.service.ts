@@ -5,10 +5,56 @@ import { validate } from 'class-validator';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from './entities/user.entity';
 
+export type user = {
+  user_no: number;
+  user_id: string;
+  pwd: string;
+};
+
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
   private user: User[] = [];
+  // private readonly users: user[] = [
+  //   {
+  //     user_no: 1,
+  //     user_id: 'one',
+  //     pwd: 'hana',
+  //   },
+  //   {
+  //     user_no: 2,
+  //     user_id: 'two',
+  //     pwd: 'dul',
+  //   },
+  //   {
+  //     user_no: 3,
+  //     user_id: 'three',
+  //     pwd: 'sam',
+  //   },
+  //   {
+  //     user_no: 4,
+  //     user_id: 'four',
+  //     pwd: 'sa',
+  //   },
+  //   {
+  //     user_no: 5,
+  //     user_id: 'five',
+  //     pwd: 'o',
+  //   },
+  // ];
+
+  // async findOne(user_id: string): Promise<user | undefined> {
+  //   return this.user.find((user) => user.user_id === user_id);
+  // }
+
+  async getUserInfo(user_id: string, pwd: string): Promise<User> {
+    const user_info = await this.prisma.user.findFirst({
+      where: {
+        user_id,
+      },
+    });
+    return user_info;
+  }
 
   //사용자 전체조회
   async getUserList(): Promise<User[]> {

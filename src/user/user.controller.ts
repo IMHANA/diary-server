@@ -1,11 +1,32 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { user } from '@prisma/client';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { CreateSharedDto } from 'src/shared/dto/create-shared-dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  // @UseGuards(LocalAuthGuard)
+  // @Post('login')
+  // login(@Request() req): any {
+  //   return req.user;
+  // }
+
+  @Post('login')
+  getUserInfo(@Body() user_id: string, pwd: string): Promise<user> {
+    return this.userService.getUserInfo(user_id, pwd);
+  }
 
   //사용자 전체조회
   @Get('list')
