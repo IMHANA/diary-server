@@ -6,7 +6,9 @@ import {
   Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { diary, Prisma } from '@prisma/client';
 import { DiaryService } from './diary.service';
 import { CreateDiaryDto } from './dto/create-diary.dto';
@@ -39,8 +41,12 @@ export class DiaryController {
 
   //일기 년도별 조회
   @Get('diary_year/:year')
-  getDiaryWithYear(@Param('year') year: number): Promise<diary[]> {
-    return this.diaryService.getDiaryWithYear(year);
+  getDiaryWithYear(
+    @Req() request: Request,
+    @Param('year') year: number,
+  ): Promise<diary[]> {
+    const { user_id: userId } = request.cookies;
+    return this.diaryService.getDiaryWithYear(year, userId);
   }
 
   //일기 월별 조회 (202108 형태)

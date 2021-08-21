@@ -1,15 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { user } from '@prisma/client';
+import { CookieAccessInfo } from 'cookiejar';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateSharedDto } from 'src/shared/dto/create-shared-dto';
+import { saveCookies } from 'superagent';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 

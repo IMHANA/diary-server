@@ -43,10 +43,11 @@ export class DiaryService {
   // }
 
   //일기 년도별 조회
-  async getDiaryWithYear(year: number): Promise<diary[]> {
+  async getDiaryWithYear(year: number, userId: string): Promise<diary[]> {
     console.log(year);
+    console.log(userId);
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYY') = '${year}';`,
+      `select * from "diary" as "D" inner join "user" as "U" on ("U"."user_no" = "D"."user_no") where to_char("diary_date", 'YYYY') = '${year}' and "U"."user_id" = '${userId}';`,
     );
     return data;
   }
