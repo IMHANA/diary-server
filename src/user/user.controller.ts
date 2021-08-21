@@ -24,7 +24,8 @@ export class UserController {
   // }
 
   @Post('login')
-  getUserInfo(@Body() user_id: string, pwd: string): Promise<user> {
+  getUserInfo(@Body() body: any): Promise<user> {
+    const { user_id, pwd } = body;
     return this.userService.getUserInfo(user_id, pwd);
   }
 

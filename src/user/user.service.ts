@@ -47,10 +47,14 @@ export class UserService {
   //   return this.user.find((user) => user.user_id === user_id);
   // }
 
-  async getUserInfo(user_id: string, pwd: string): Promise<User> {
+  async getUserInfo(u_id: string, pwd: string): Promise<user> {
+    console.log('u_id: ', u_id, ' pwd: ', pwd);
     const user_info = await this.prisma.user.findFirst({
-      where: {
-        user_id,
+      where: { user_id: u_id, pwd: pwd },
+      select: {
+        user_id: true,
+        user_no: true,
+        pwd: true,
       },
     });
     return user_info;
