@@ -77,18 +77,41 @@ export class DiaryService {
   }
 
   //월별 가장 많이 선택된 스티커 번호 조회
-  async getMonthlySticker(year: number): Promise<any> {
+  async getMonthlySticker(year: number, userId: string): Promise<any> {
+    console.log(81818181818181818);
+    console.log('U_id', userId);
+    console.log('Y', year);
+
     const diary = await this.prisma.$queryRaw(
-      `select ds, sticker
-      from(
-       select row_number () over (partition by ds ORDER BY cnt DESC) as rnk, ds, sticker
-       from(
-        select to_char(diary_date,'YYYY/MM') as ds, sticker, count(sticker) as cnt
-        from diary group by to_char(diary_date,'YYYY/MM'), sticker
-       ) as TBL1
-      ) as TBL2
-      where rnk = 1 and to_char(to_date(ds, 'YYYY/MM'),'YYYY') = '${year}'`,
+      `select * from (
+        select ds, 
+                case sticker 
+                    when 1 then 'angry'
+                    when 2 then 'good'
+                    when 3 then 'sad'
+                    when 4 then 'happy'
+                    when 5 then 'soso'
+                    when 6 then 'tired'
+                    else 'what'
+                end as sticker
+        from(
+          select row_number() over (partition by ds ORDER BY cnt DESC) as rnk, ds, sticker
+          from(
+            select to_char(diary_date,'YYYY/MM') as ds, sticker, count(sticker) as cnt
+            from (
+            	select *
+            	from diary D
+            	left join "user" as u 
+            	on D.user_no = u.user_no
+            	where U.user_id = '${userId}'
+            ) as diary group by to_char(diary_date,'YYYY/MM'), sticker
+          ) as TBL1
+        ) as TBL2
+        where rnk = 1 and to_char(to_date(ds, 'YYYY/MM'),'YYYY') = '${year}'
+      ) as D`,
     );
+    console.log('diary =? ', diary);
+
     return diary;
   }
 
