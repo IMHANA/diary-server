@@ -51,8 +51,12 @@ export class DiaryController {
 
   //일기 월별 조회 (202108 형태)
   @Get('diary_month/:month')
-  getDiaryWithMonth(@Param('month') month: string): Promise<diary[]> {
-    return this.diaryService.getDiaryWithMonth(month);
+  getDiaryWithMonth(
+    @Req() request: Request,
+    @Param('month') month: string,
+  ): Promise<diary[]> {
+    const { user_id: userId } = request.cookies;
+    return this.diaryService.getDiaryWithMonth(month, userId);
   }
 
   //일기 일별 조회 (20210817 형태)

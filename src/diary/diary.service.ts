@@ -53,9 +53,9 @@ export class DiaryService {
   }
 
   //일기 월별 조회 (202108 형태)
-  async getDiaryWithMonth(month: string): Promise<diary[]> {
+  async getDiaryWithMonth(month: string, userId: string): Promise<diary[]> {
     const data = await this.prisma.$queryRaw(
-      `select * from diary where to_char(diary_date, 'YYYYMM') = '${month}';`,
+      `select * from diary as D inner join "user" as U on (U.user_no = D.user_no) where to_char(diary_date, 'YYYYMM') = '${month}' and U.user_id = '${userId}';`,
     );
     return data;
   }
