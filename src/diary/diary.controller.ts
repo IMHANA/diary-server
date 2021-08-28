@@ -67,8 +67,12 @@ export class DiaryController {
 
   //일기 추가
   @Post('new_diary')
-  addDiary(@Body() body: Prisma.diaryCreateInput): Promise<number> {
-    return this.diaryService.addDiary(body);
+  addDiary(
+    @Req() request: Request,
+    @Body() body: Prisma.diaryCreateInput,
+  ): Promise<number> {
+    const { user_id: userId } = request.cookies;
+    return this.diaryService.addDiary(body, userId);
   }
 
   //월별 가장 많이 선택된 스티커 번호 조회

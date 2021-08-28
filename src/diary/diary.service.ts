@@ -55,7 +55,22 @@ export class DiaryService {
   //일기 월별 조회 (202108 형태)
   async getDiaryWithMonth(month: string, userId: string): Promise<diary[]> {
     const data = await this.prisma.$queryRaw(
-      `select * from diary as D inner join "user" as U on (U.user_no = D.user_no) where to_char(diary_date, 'YYYYMM') = '${month}' and U.user_id = '${userId}';`,
+      `select *, 
+        case sticker 
+                      when 1 then 'angry'
+                      when 2 then 'good'
+                      when 3 then 'sad'
+                      when 4 then 'happy'
+                      when 5 then 'soso'
+                      when 6 then 'tired'
+                      when 7 then 'what'
+                      else 'nothing'
+                  end as sticker
+      from diary as D 
+      inner join "user" as U 
+      on (U.user_no = D.user_no) 
+      where to_char(diary_date, 'YYYYMM') = '${month}' 
+      and U.user_id = '${userId}';`,
     );
     return data;
   }
@@ -69,11 +84,36 @@ export class DiaryService {
   }
 
   //일기 추가
-  async addDiary(diary: Prisma.diaryCreateInput): Promise<number> {
-    const createDiary = await this.prisma.diary.create({
-      data: diary,
+  async addDiary(
+    diary: Prisma.diaryCreateInput,
+    userId: string,
+  ): Promise<number> {
+    const user = await this.prisma.user.findFirst({
+      where: { user_id: userId },
     });
-    return createDiary.diary_no;
+    console.log('user => ', user);
+
+    console.log(diary);
+
+    const data = await this.prisma.$queryRaw(
+      `INSERT INTO diary
+      (title_list, user_no, painting, text_field, sticker)
+      VALUES('{${diary.title_list}}', ${user.user_no}, '${diary.painting}', '${diary.text_field}', ${diary.sticker})
+      RETURNING *
+      `,
+    );
+
+    // TODO : 생성 안됨 추후 확인 필요
+    // const createDiary = await this.prisma.diary.create({
+    //   data: {
+    //     title_list: diary.title_list,
+    //     text_field: diary.text_field,
+    //     sticker: diary.sticker,
+    //     painting: diary.painting,
+    //     user_no: user.user_no,
+    //   },
+    // });
+    return data.diary_no;
   }
 
   //월별 가장 많이 선택된 스티커 번호 조회
@@ -92,7 +132,8 @@ export class DiaryService {
                     when 4 then 'happy'
                     when 5 then 'soso'
                     when 6 then 'tired'
-                    else 'what'
+                    when 7 then 'what'
+                    else 'nothing'
                 end as sticker
         from(
           select row_number() over (partition by ds ORDER BY cnt DESC) as rnk, ds, sticker
