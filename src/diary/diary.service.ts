@@ -70,7 +70,8 @@ export class DiaryService {
       inner join "user" as U 
       on (U.user_no = D.user_no) 
       where to_char(diary_date, 'YYYYMM') = '${month}' 
-      and U.user_id = '${userId}';`,
+      and U.user_id = '${userId}'
+      order by diary_date asc;`,
     );
     return data;
   }
