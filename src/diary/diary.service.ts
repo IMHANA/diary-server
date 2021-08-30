@@ -180,6 +180,7 @@ export class DiaryService {
     diary_no: number,
     updateData: Prisma.diaryUpdateInput,
   ): Promise<diary> {
+    updateData.sticker = +updateData.sticker;
     diary_no = +diary_no;
     const diary = await this.prisma.diary.update({
       where: { diary_no },
