@@ -65,6 +65,12 @@ export class DiaryController {
     return this.diaryService.getDiaryWithDay(day);
   }
 
+  //일기 diary_no로 조회
+  @Get('diary_no/:diary_no')
+  getDiaryWithDnum(@Param('diary_no') diary_no: number): Promise<diary> {
+    return this.diaryService.getDiaryWithDnum(diary_no);
+  }
+
   //일기 추가
   @Post('new_diary')
   addDiary(

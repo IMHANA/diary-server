@@ -83,6 +83,15 @@ export class DiaryService {
     return data;
   }
 
+  //일기 diary_no로 조회
+  async getDiaryWithDnum(diary_no: number): Promise<diary> {
+    diary_no = +diary_no;
+    const diary = await this.prisma.diary.findFirst({
+      where: { diary_no },
+    });
+    return diary;
+  }
+
   //일기 추가
   async addDiary(
     diary: Prisma.diaryCreateInput,
