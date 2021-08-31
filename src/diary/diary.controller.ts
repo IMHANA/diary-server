@@ -36,8 +36,8 @@ export class DiaryController {
     @Param('date') date: string,
     // @Body() searchParam: SearchHasDto,
   ): Promise<diary[]> {
-    const { user_id: userId } = request.cookies;
-    return this.diaryService.getHash(tag, userId, date);
+    const { user_no: userNo } = request.cookies;
+    return this.diaryService.getHash(tag, userNo, date);
   }
 
   //일기 select로 날짜만 다 가져오기?

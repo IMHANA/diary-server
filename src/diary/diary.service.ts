@@ -17,19 +17,23 @@ export class DiaryService {
   }
 
   //일기 해시태그로 조회
-  async getHash(tag: string, userId: string, date: string): Promise<diary[]> {
+  async getHash(tag: string, user_no: string, date: string): Promise<diary[]> {
+    // user_no = Number(user_no);
+    console.log('user_no: ', user_no);
+    console.log('tag: ', tag);
+    console.log('date: ', date);
     const diaries = await this.prisma.$queryRaw(
       `select *
       from diary
-      where user_id=${userId}
-      and to_char(diary_date, 'yyyymm) = ${date}
-      and tag_in_title(title_list, '') like %${tag}%`,
+      where user_no=${user_no}
+      and to_char(diary_date, 'yyyymm') = '${date}'
+      and array_to_string(title_list, '') like '%${tag}%';`,
     );
     return diaries;
   }
 
-  //일기 해시태그로 조회
-  // async getHash(hash: string, userId: string): Promise<diary[]> {
+  // //일기 해시태그로 조회
+  // async getHash(hash: string, userId: string, date: string): Promise<diary[]> {
   //   const diaries = await this.prisma.diary.findMany({
   //     where: {
   //       title_list: {

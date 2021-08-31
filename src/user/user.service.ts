@@ -57,6 +57,7 @@ export class UserService {
         pwd: true,
       },
     });
+    console.log('user_info: ', user_info);
     return user_info;
   }
 
