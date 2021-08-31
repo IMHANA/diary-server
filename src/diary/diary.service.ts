@@ -23,7 +23,17 @@ export class DiaryService {
     console.log('tag: ', tag);
     console.log('date: ', date);
     const diaries = await this.prisma.$queryRaw(
-      `select *
+      `select *,
+      case sticker 
+                      when 1 then 'angry'
+                      when 2 then 'good'
+                      when 3 then 'sad'
+                      when 4 then 'happy'
+                      when 5 then 'soso'
+                      when 6 then 'tired'
+                      when 7 then 'what'
+                      else 'nothing'
+                  end as sticker
       from diary
       where user_no=${user_no}
       and to_char(diary_date, 'yyyymm') = '${date}'
