@@ -28,9 +28,16 @@ export class DiaryController {
   }
 
   //일기 해시태그로 조회
-  @Get('search_hash')
-  getHash(@Body() searchParam: SearchHasDto): Promise<diary[]> {
-    return this.diaryService.getHash(searchParam.hash);
+  @Get('search_hash/:date/:tag')
+  getHash(
+    // @Param('month') month: string,
+    @Req() request: Request,
+    @Param('tag') tag: string,
+    @Param('date') date: string,
+    // @Body() searchParam: SearchHasDto,
+  ): Promise<diary[]> {
+    const { user_id: userId } = request.cookies;
+    return this.diaryService.getHash(tag, userId, date);
   }
 
   //일기 select로 날짜만 다 가져오기?

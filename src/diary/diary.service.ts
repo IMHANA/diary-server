@@ -17,16 +17,28 @@ export class DiaryService {
   }
 
   //일기 해시태그로 조회
-  async getHash(hash: string): Promise<diary[]> {
-    const diaries = await this.prisma.diary.findMany({
-      where: {
-        title_list: {
-          has: hash,
-        },
-      },
-    });
+  async getHash(tag: string, userId: string, date: string): Promise<diary[]> {
+    const diaries = await this.prisma.$queryRaw(
+      `select *
+      from diary
+      where user_id=${userId}
+      and to_char(diary_date, 'yyyymm) = ${date}
+      and tag_in_title(title_list, '') like %${tag}%`,
+    );
     return diaries;
   }
+
+  //일기 해시태그로 조회
+  // async getHash(hash: string, userId: string): Promise<diary[]> {
+  //   const diaries = await this.prisma.diary.findMany({
+  //     where: {
+  //       title_list: {
+  //         has: hash,
+  //       },
+  //     },
+  //   });
+  //   return diaries;
+  // }
 
   //일기 년도별 조회
   // async getDiaryWithYear(year: number): Promise<Diary[]> {
