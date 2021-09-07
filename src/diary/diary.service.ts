@@ -20,7 +20,7 @@ export class DiaryService {
   async getHash(tag: string, user_no: string, date: string): Promise<diary[]> {
     // user_no = Number(user_no);
     console.log('user_no: ', user_no);
-    console.log('tag: ', tag);
+    console.log('tag: ', tag, typeof tag);
     console.log('date: ', date);
     const diaries = await this.prisma.$queryRaw(
       `select *,
@@ -73,7 +73,10 @@ export class DiaryService {
     console.log(year);
     console.log(userId);
     const data = await this.prisma.$queryRaw(
-      `select * from "diary" as "D" inner join "user" as "U" on ("U"."user_no" = "D"."user_no") where to_char("diary_date", 'YYYY') = '${year}' and "U"."user_id" = '${userId}';`,
+      `select * from "diary" as "D" 
+      inner join "user" as "U" on ("U"."user_no" = "D"."user_no") 
+      where to_char("diary_date", 'YYYY') = '${year}' 
+      and "U"."user_id" = '${userId}';`,
     );
     return data;
   }
@@ -139,6 +142,8 @@ export class DiaryService {
       `,
     );
 
+    console.log('data 출력: ', data);
+
     // TODO : 생성 안됨 추후 확인 필요
     // const createDiary = await this.prisma.diary.create({
     //   data: {
@@ -194,7 +199,7 @@ export class DiaryService {
 
   //일기 diary no로 조회
   async getDiaryWithNo(diary_no: number): Promise<diary> {
-    diary_no = +diary_no;
+    diary_no = +diary_no; //pipe를 안써서 이렇게.. 변환을 해줘야 한 것... pipe - transration
     const diary = await this.prisma.diary.findFirst({
       where: { diary_no },
     });

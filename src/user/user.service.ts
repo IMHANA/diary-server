@@ -15,37 +15,6 @@ export type user = {
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
   private user: User[] = [];
-  // private readonly users: user[] = [
-  //   {
-  //     user_no: 1,
-  //     user_id: 'one',
-  //     pwd: 'hana',
-  //   },
-  //   {
-  //     user_no: 2,
-  //     user_id: 'two',
-  //     pwd: 'dul',
-  //   },
-  //   {
-  //     user_no: 3,
-  //     user_id: 'three',
-  //     pwd: 'sam',
-  //   },
-  //   {
-  //     user_no: 4,
-  //     user_id: 'four',
-  //     pwd: 'sa',
-  //   },
-  //   {
-  //     user_no: 5,
-  //     user_id: 'five',
-  //     pwd: 'o',
-  //   },
-  // ];
-
-  // async findOne(user_id: string): Promise<user | undefined> {
-  //   return this.user.find((user) => user.user_id === user_id);
-  // }
 
   async getUserInfo(u_id: string, pwd: string): Promise<user> {
     console.log('u_id: ', u_id, ' pwd: ', pwd);
@@ -72,27 +41,41 @@ export class UserService {
   //사용자 id로 조회
   async getUser(user_id: string): Promise<User> {
     const user = await this.prisma.user.findFirst({
-      where: { user_id: 'desc' },
+      where: { user_id },
     });
     return user;
   }
 
-  //사용자 추가
+  //사용자 추가 -> pipe를 내가 안써서.. vailidate가 의미 없는...중
   async addUser(user: Prisma.userCreateInput): Promise<User> {
-    const newUser = user;
-    let id = '';
-    id = newUser.user_id;
-    const validate_err = await validate(newUser);
-    if (validate_err.length > 0) {
-      const err = { id: 'User id is already exist' };
+    const userId = await this.getUser(user.user_id);
+    if (userId) {
+      // if (await userId) {
+      //promise 객체가 반환되기 때문에 무조건 true가 응답됨.
+      const err = { id: '아이디가 중복되었습니다.' };
       throw new HttpException(
         { message: 'Input data validation failed', err },
         HttpStatus.BAD_REQUEST,
       );
     } else {
       return await this.prisma.user.create({
-        data: newUser,
+        data: user,
       });
     }
+    // const newUser = user;
+    // let id = '';
+    // id = newUser.user_id;
+    // const validate_err = await validate(newUser);
+    // if (validate_err.length > 0) {
+    //   const err = { id: 'User id is already exist' };
+    //   throw new HttpException(
+    //     { message: 'Input data validation failed', err },
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // } else {
+    //   return await this.prisma.user.create({
+    //     data: newUser,
+    //   });
+    // }
   }
 }

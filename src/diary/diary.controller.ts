@@ -27,7 +27,7 @@ export class DiaryController {
     return this.diaryService.getList();
   }
 
-  //일기 해시태그로 조회
+  //일기 해시태그로 조회 -> param, query string 사용법
   @Get('search_hash/:date/:tag')
   getHash(
     // @Param('month') month: string,

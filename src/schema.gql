@@ -1,0 +1,46 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Author {
+  id: Int!
+  firstName: String
+  lastName: String
+}
+
+type Diary {
+  diary_no: Float!
+  title_list: [String!]!
+  user_no: Float!
+  painting: String!
+  text_field: String!
+  sticker: Float!
+  diary_date: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Post {
+  diary_no: Float!
+  title_list: String!
+  comment: [Comment!]
+}
+
+type Comment {
+  comment_no: Float!
+  title: String!
+}
+
+type Query {
+  author(id: Int!): Author!
+  post: [Post!]!
+  diary: [Diary!]!
+  diaryWithHash(date: String!, tag: String!): [Diary!]!
+}
+
+type Mutation {
+  diaryPost(diary_no: Float!, title_list: [String!]!, user_no: Float!, painting: String!, text_field: String!, sticker: Float, diary_date: DateTime!): Diary!
+}
